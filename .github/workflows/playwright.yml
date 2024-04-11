@@ -36,4 +36,4 @@ jobs:
       - name: Execute load tests
         uses: artilleryio/action-cli@v1
         with:
-          command: run Artillery/Playwright perf tests/airbnb-playwright-perf-test.yml
+          command: run Artillery/Playwright-perf-tests/airbnb-playwright-perf-test.yml
