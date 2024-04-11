@@ -8,22 +8,49 @@ jobs:
   artillery:
     runs-on: ubuntu-latest
 
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v2
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: lts/*
+#      - name: Install dependencies
+#        run: npm ci
+#      - name: Install Playwright Browsers
+#        run: npx playwright install
+#      - name: Install Chrome
+#        run: npx playwright install chrome
+#      - name: Execute load tests
+#        uses: artilleryio/action-cli@v1
+#        with:
+#          command: run Artillery/Playwright-perf-tests/airbnb-playwright-perf-test.yml
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: lts/*
+
       - name: Install dependencies
-        run: npm ci
-      - name: Install Playwright Browsers
-        run: npx playwright install
-      - name: Install Chrome
-        run: npx playwright install chrome
+        run: |
+          npm install
+          npx playwright install
+
       - name: Execute load tests
         uses: artilleryio/action-cli@v1
         with:
-          command: run Artillery/Playwright-perf-tests/airbnb-playwright-perf-test.yml
+          command: run Artillery/Playwright-perf-tests/airbnb-playwright-perf-test.yml --output ./report.json
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: artillery-report
+          # Reference the generated report in the file system.
+          path: ./report.json
 #  test:
 #    timeout-minutes: 60
 #    runs-on: ubuntu-latest
