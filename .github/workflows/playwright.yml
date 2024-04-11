@@ -18,6 +18,8 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install
+      - name: Install Chrome
+        run: npx playwright install chrome
       - name: Execute load tests
         uses: artilleryio/action-cli@v1
         with:
