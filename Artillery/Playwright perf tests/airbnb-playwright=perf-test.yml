@@ -1,0 +1,13 @@
+config:
+  target: https://www.artillery.io
+  phases:
+    - duration: 60
+      arrivalRate: 1
+      rampTo: 5
+      name: Warm up phase
+  engines:
+    playwright: {}
+  processor: "./flows.ts"
+scenarios:
+  - engine: playwright
+    testFunction: "helloFlow"
