@@ -9,7 +9,7 @@ config:
     playwright:
       extendedMetrics: true
       launchOptions:
-        headless: false
+        headless: true
   processor: "./reserve-listing.js"
 scenarios:
   - engine: playwright
