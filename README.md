@@ -53,5 +53,3 @@ This project includes performance testing using Artillery.io. There are two type
    ```bash
    artillery run airbnb-playwright-perf-test.yml
    ```
-
-```
