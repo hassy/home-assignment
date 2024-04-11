@@ -5,6 +5,8 @@ export default class ListingPage extends AirbnbMainPage {
     private checkinDate = '[data-testid="change-dates-checkIn"]';
     private checkinOut = '[data-testid="change-dates-checkOut"]';
     private guests = '[data-testid="book-it-default"] ._j1kt73';
+    private guestsPanel = '._r2ourjn';
+    private closeGuestPanel = '[class*="p atm_9j"]'
     private closeTranslationPopup = '[class*="k_1tcgj5g dir dir-ltr"]';
     private guestDropdown = '[for="GuestPicker-book_it-trigger"]';
     private childCounter = "GuestPicker-book_it-form-children-stepper-value";
@@ -98,9 +100,14 @@ export default class ListingPage extends AirbnbMainPage {
 
     /**
      * Clicks the reserve button to proceed with the booking.
+     * If the guest panel is open, it closes it before clicking the reserve button.
      */
 
     public async clickReserve() {
+        let guestPanelCount = await this.page.locator(this.guestsPanel).count() > 0;
+        if (guestPanelCount) {
+            await this.page.locator(this.closeGuestPanel).click();
+        }
         await this.page.locator(this.reserveButton).click();
     }
 }

@@ -13,7 +13,7 @@ test.describe('Search for a Stay exercise', () => {
     let confirmationPage: ConfirmationPage;
     let newTab: Page;
     const siteURL = 'https://www.airbnb.com/';
-    const destination = 'Tel Aviv District, Israel';
+    const destination = 'Amsterdam, Netherlands';
     const numberOfAdults = 2;
     const numberOfChildren = 1;
     let tomorrowDate: string;
@@ -49,7 +49,7 @@ test.describe('Search for a Stay exercise', () => {
 
         await test.step('Search and validate results', async () => {
             await airbnbPage.clickSearch();
-            await airbnbPage.validateSearchResults('places');
+            await airbnbPage.validateSearchResults('places in Amsterdam');
         })
         await test.step('validate the number of guests', async () => {
             numberOfGuests = parseInt(await airbnbPage.getNumberOfGuests());
