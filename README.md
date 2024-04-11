@@ -30,9 +30,6 @@ Install the project dependencies:
 npm install
 ```
 
-## Usage
-Describe how to use your project. Include any necessary setup steps, configuration, or environment variables.
-
 ## Testing
 The project utilizes Playwright for end-to-end testing. To run the tests, use the following command:
 ```bash
