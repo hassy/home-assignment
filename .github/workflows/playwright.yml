@@ -11,9 +11,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
-      - name: Execute load tests
-        uses: artilleryio/action-cli@v1
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
@@ -21,6 +18,8 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install
+      - name: Execute load tests
+        uses: artilleryio/action-cli@v1
         with:
           command: run Artillery/Playwright-perf-tests/airbnb-playwright-perf-test.yml
 #  test:
