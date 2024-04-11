@@ -6,7 +6,7 @@ on:
     branches: [ main, master ]
 jobs:
   artillery:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
 #    steps:
 #      - name: Checkout repository
