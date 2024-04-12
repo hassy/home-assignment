@@ -13,46 +13,27 @@ export default class ListingPage extends AirbnbMainPage {
     private childDecreaseButton = '[data-testid="GuestPicker-book_it-form-children-stepper-decrease-button"]';
     private reserveButton = '[data-plugin-in-point-id="BOOK_IT_SIDEBAR"] [data-testid="homes-pdp-cta-btn"]';
 
-    /**
-     * This function locates and clicks on the close button of a popup window
-     */
 
     public async closePopup() {
         let closePopup = this.page.locator(this.closeTranslationPopup);
         await closePopup.click();
     }
 
-    /**
-     * Validates the check-in date displayed on the page.
-     * @param checkinDate - The expected check-in date to validate against.
-     */
-
     public async validateCheckinDate(checkinDate: string) {
         await this.validateTextContent(this.checkinDate, checkinDate);
     }
 
-    /**
-     * Validates the checkout date displayed on the page
-     * @param checkinDate - The expected checkout date to validate against.
-     */
 
     public async validateCheckoutDate(checkinDate: string) {
         await this.validateTextContent(this.checkinOut, checkinDate);
     }
 
-    /**
-     * Validates the number of guests displayed on the page.
-     * @param expectedNumberOfGuests - The expected number of guests to validate against.
-     */
 
     public async validateNumberOfGuests(expectedNumberOfGuests: number) {
         const numberOfGuests = parseInt(await this.getTextContent(this.guests));
         expect(numberOfGuests).toEqual(expectedNumberOfGuests);
     }
 
-    /**
-     * Decreases the number of child guests to zero by clicking the decrease button.
-     */
 
     public async decreaseChildGuestToZero() {
         await this.page.locator(this.guestDropdown).click();
@@ -65,11 +46,6 @@ export default class ListingPage extends AirbnbMainPage {
         }
     }
 
-    /**
-     * Changes the booking dates based on the specified offsets from today's date.
-     * @param checkinOffset - The offset in days from today's date for the check-in date.
-     * @param checkoutOffset - The offset in days from today's date for the checkout date.
-     */
 
     public async changeBookingDates(checkinOffset: number, checkoutOffset: number) {
         let nextWeekDate = this.getDate(checkinOffset);
@@ -97,11 +73,6 @@ export default class ListingPage extends AirbnbMainPage {
             await this.validateCheckoutDate(formattedCheckOutDate);
         }
     }
-
-    /**
-     * Clicks the reserve button to proceed with the booking.
-     * If the guest panel is open, it closes it before clicking the reserve button.
-     */
 
     public async clickReserve() {
         let guestPanelCount = await this.page.locator(this.guestsPanel).count() > 0;

@@ -20,11 +20,6 @@ export default class AirbnbMainPage extends BasePage {
     private guestsInSearchPanel = '[class$="ltr"][data-index="2"] .f16sug5q';
 
 
-    /**
-     * Selects a destination from a search destination field.
-     * @param destination - The destination to select.
-     */
-
     public async selectDestination(destination: string): Promise<void> {
         let destinationField = this.page.getByTestId(this.destinationText);
         await destinationField.waitFor();
@@ -32,21 +27,12 @@ export default class AirbnbMainPage extends BasePage {
         await this.selectFromDropdown(this.destinationOptions, destination);
     }
 
-    /**
-     * Selects a date on the calendar if it is available.
-     * @param date - The date to select in the format "MM/DD/YYYY".
-     */
 
     public async selectDate(date: string) {
         const dateSwapTomorrow = this.calendarDate.replace('date', date)
         await this.page.getByTestId(dateSwapTomorrow).click();
     }
 
-    /**
-     * Selects the number of guests for a specified guest type.
-     * @param {guestEnum} guestType - The type of guest (e.g., adults, children).
-     * @param guestNumber - The number of guests to select.
-     */
 
     public async selectGuests(guestType: guestEnum, guestNumber: number) {
         let guestPanelCount = await this.page.getByTestId(this.guestPanel).count() < 1;
@@ -62,45 +48,36 @@ export default class AirbnbMainPage extends BasePage {
         }
     }
 
-    /**
-     * Clicks the search button to initiate a search action.
-     */
-
     public async clickSearch() {
         await this.page.getByTestId(this.search).click();
     }
 
-    /**
-     * Validates the search results to ensure they meet the expected criteria.
-     * @param expectedResult - The expected result to validate against.
-     */
 
-    public async validateSearchResults(expectedResult: string) {
-        await this.page.waitForLoadState('networkidle')
-
+    public async validateSearchResultsCount() {
         // Validate that the number of results is greater than 0
-        const numberOfResults = parseInt(await this.page.locator(this.results).textContent())
-        console.log("Total number of results: " + numberOfResults)
-        expect(numberOfResults).toBeGreaterThan(0)
+        await expect.poll(async () => {
+            return parseInt(await this.page.locator(this.results).textContent())
+        }, {
+            timeout: 15000
+        }).toBeGreaterThan(0);
+    }
 
+    public async validateSearchResultsText(expectedResult: string) {
         // Validate that the result's text is correct
         await this.validateTextContent(this.results, expectedResult)
     }
-
-    /**
-     * Retrieves the number of guests displayed in the search panel.
-     */
 
     public async getNumberOfGuests() {
         return await this.getTextContent(this.guestsInSearchPanel);
     }
 
     /**
-     * Selects the highest-rated listing from a list of listings.*
+     * Selects the highest-rated listing from a list of listings.
      * This function iterates through all the elements containing listing ratings on the page.
      * It compares the ratings of each listing to find the highest-rated one.
      * Once the highest-rated listing is identified, it clicks on it to open it in a new tab.
      */
+
     public async selectHighestRatedListing() {
         let highestRating = 0;
         let highestRatedElement: Locator;
@@ -120,10 +97,8 @@ export default class AirbnbMainPage extends BasePage {
                 await highestRatedElement.first().click({force: true})
             ]);
             return newTab;
-
-
         } else {
-            console.log('No elements found with the specified class');
+            throw new Error('No elements found with the specified class');
         }
     }
 }

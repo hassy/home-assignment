@@ -1,4 +1,5 @@
 import {defineConfig, devices} from '@playwright/test';
+import {AIRBNB_BASE_URL} from "./helpers/Environment";
 
 export default defineConfig({
     timeout: 120000,
@@ -8,13 +9,7 @@ export default defineConfig({
     retries: process.env.CI ? 2 : 0,
     reporter: [['html', {open: 'never'}],
         ['junit', {outputFile: 'results.xml'}]],
-    use: {
-        trace: 'on-first-retry',
-        screenshot: 'on',
-        video: {
-            mode: "retain-on-failure",
-        }
-    },
+
     projects: [
         {
             name: 'firefox',
@@ -29,4 +24,12 @@ export default defineConfig({
             use: {...devices['Desktop Chrome'], channel: 'chrome'},
         },
     ],
+    use: {
+        baseURL: AIRBNB_BASE_URL,
+        trace: 'on-first-retry',
+        screenshot: 'on',
+        video: {
+            mode: "retain-on-failure",
+        }
+    },
 });

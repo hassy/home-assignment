@@ -5,14 +5,13 @@ import ListingPage from "../pages/ListingPage";
 import ConfirmationPage from "../pages/ConfirmationPage";
 
 
-test.describe('Search for a Stay exercise', () => {
+test.describe('Reserving an Airbnb Listing', () => {
 
     let basePage: BasePage;
     let airbnbPage: AirbnbMainPage;
     let listingPage: ListingPage;
     let confirmationPage: ConfirmationPage;
     let newTab: Page;
-    const siteURL = 'https://www.airbnb.com/';
     const destination = 'Amsterdam, Netherlands';
     const numberOfAdults = 2;
     const numberOfChildren = 1;
@@ -21,21 +20,21 @@ test.describe('Search for a Stay exercise', () => {
     let numberOfGuests: number;
 
 
-    test('Search for a Stay in airbnb site and validate', async ({page}) => {
+    test('End-to-End Test: Reserving the Highest Rated Airbnb Listing in Amsterdam and Validating Selected Details', async ({page}) => {
 
         basePage = new BasePage(page);
         airbnbPage = new AirbnbMainPage(page);
         listingPage = new ListingPage(page);
 
         await test.step('Navigate to airbnb', async () => {
-            await basePage.loadApplication(siteURL);
+            await basePage.loadApplication('/');
 
         })
-        await test.step(`Select ${destination} destination`, async () => {
+        await test.step(`Select destination: ${destination} `, async () => {
             await airbnbPage.selectDestination(destination);
         })
 
-        await test.step('Select tomorrow date as checkin and day after tomorrow for checkout', async () => {
+        await test.step('Select tomorrow date as check-in and day after tomorrow for check-out', async () => {
             tomorrowDate = basePage.getDate(1);
             dayAfterTomorrowDate = basePage.getDate(2);
             await airbnbPage.selectDate(tomorrowDate);
@@ -47,9 +46,10 @@ test.describe('Search for a Stay exercise', () => {
             await airbnbPage.selectGuests(guestEnum.CHILDREN, numberOfChildren);
         })
 
-        await test.step('Search and validate results', async () => {
+        await test.step('Search and validate results count is greater than 0 and validate text is correct', async () => {
             await airbnbPage.clickSearch();
-            await airbnbPage.validateSearchResults('places in Amsterdam');
+            await airbnbPage.validateSearchResultsCount();
+            await airbnbPage.validateSearchResultsText('places in Amsterdam');
         })
         await test.step('validate the number of guests', async () => {
             numberOfGuests = parseInt(await airbnbPage.getNumberOfGuests());
@@ -71,16 +71,16 @@ test.describe('Search for a Stay exercise', () => {
 
         })
 
-        await test.step('Adjust and Verify Guest Count', async () => {
+        await test.step('Decrease the number of child guests to 0 and validate that the guest count updates correctly', async () => {
             await listingPage.decreaseChildGuestToZero();
             await listingPage.validateNumberOfGuests(numberOfGuests - 1);
         })
 
-        await test.step('Change Booking Dates', async () => {
+        await test.step('Change booking dates to a week from the current date. ', async () => {
             await listingPage.changeBookingDates(8,9);
         })
 
-        await test.step('Reserve and Validate', async () => {
+        await test.step('Reserve and validate URL include the accurate number of adults', async () => {
             await listingPage.clickReserve();
             confirmationPage = new ConfirmationPage(newTab);
             await confirmationPage.validateReservationUrl('/book/stays/');
