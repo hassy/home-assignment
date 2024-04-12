@@ -1,4 +1,4 @@
-## TypeScript Playwright Assignment
+## Playwright Home Assignment
 
 This project is a TypeScript assignment that focuses on utilizing Playwright for end-to-end testing, specifically targeting various scenarios. The codebase employs the Page Object Model methodology for improved organization and maintainability.
 
@@ -9,7 +9,7 @@ In addition, it includes a dedicated section for performance testing using [Arti
 1. **Clone the repository**
    
    ```bash
-   git clone <repo_url>
+   git clone [<repo_url>](https://github.com/Mshumaman/home-assignment.git)
    ```
 
 2. **Install dependencies**
