@@ -1,52 +1,55 @@
-```markdown
+## TypeScript Playwright Assignment
 
-## Description
-This project is a TypeScript assignment focusing on using Playwright for end-to-end testing, specifically targeting various scenarios. The codebase is structured using the Page Object Model methodology for better organization and maintainability.
+This project is a TypeScript assignment that focuses on utilizing Playwright for end-to-end testing, specifically targeting various scenarios. The codebase employs the Page Object Model methodology for improved organization and maintainability.
 
-Additionally, it includes a section dedicated to performance testing using [Artillery.io](https://artillery.io). This section demonstrates performance tests for both APIs and Playwright tests integrated with Artillery.
+In addition, it includes a dedicated section for performance testing using [Artillery.io](https://artillery.io). This section showcases performance tests for both APIs and Playwright tests integrated with Artillery.
 
-## Installation
-To get started, ensure you have the latest version of Node.js installed. You can download and install it from the [official Node.js website](https://nodejs.org/).
+### Usage
 
-Next, install Artillery and Playwright globally by running the following commands:
+1. **Clone the repository**
+   
+   ```bash
+   git clone <repo_url>
+   ```
 
-npm install -D @playwright/test@latest
+2. **Install dependencies**
+   
+   ```bash
+   npm ci
+   ```
 
-# Also download new browser binaries and their dependencies:
-npx playwright install --with-deps
+3. **Install Playwright browsers**
+   
+   ```bash
+   npx playwright install
+   ```
 
-npm install -g artillery
-```
+4. **Install Artillery**
+   
+   ```bash
+   npm install -g artillery
+   ```
 
-Then, clone the repository to your local machine:
-```bash
-git clone https://github.com/Mshumaman/home-assignment.git
+5. **Execute Playwright tests**
+   
+   Navigate to the root folder and run:
+   
+   ```bash
+   npx playwright test
+   ```
 
-cd home-assignment.git
-```
-
-Install the project dependencies:
-```bash
-npm install
-```
-
-## Testing
-The project utilizes Playwright for end-to-end testing. To run the tests, use the following command:
-```bash
-npx playwright test
-```
-
-## Performance Testing
-### Artillery.io Integration
-This project includes performance testing using Artillery.io. There are two types of performance tests showcased:
-1. **API Performance Test**: This test evaluates the performance of the API endpoints.
-   To run the API performance test, use:
+6. **Run API Performance Tests with Artillery**
+   
+   Execute the following command from the API Performance Test folder:
+   
    ```bash
    artillery run airbnb-api-perf-test.yml
    ```
 
-2. **Playwright Test Performance Test**: This test evaluates the performance of Playwright tests.
-   To run the Playwright test performance test, use:
+7. **Run Playwright Test Performance Tests with Artillery**
+   
+   Execute the following command from the Playwright Test Performance Test folder:
+   
    ```bash
    artillery run airbnb-playwright-perf-test.yml
    ```
