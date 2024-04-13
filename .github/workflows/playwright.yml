@@ -57,7 +57,7 @@ jobs:
         with:
           command: run  --output Artillery/test-run-report.json Artillery/API-perf-tests/airbnb-api-perf-test.yml
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: artillery-report
