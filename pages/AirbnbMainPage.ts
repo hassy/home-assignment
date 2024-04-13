@@ -29,7 +29,7 @@ export default class AirbnbMainPage extends BasePage {
 
 
     public async selectDate(date: string) {
-        const dateSwapTomorrow = this.calendarDate.replace('date', date)
+        const dateSwapTomorrow = this.calendarDate.replace('date', date);
         await this.page.getByTestId(dateSwapTomorrow).click();
     }
 
@@ -64,7 +64,7 @@ export default class AirbnbMainPage extends BasePage {
 
     public async validateSearchResultsText(expectedResult: string) {
         // Validate that the result's text is correct
-        await this.validateTextContent(this.results, expectedResult)
+        await this.validateTextContent(this.results, expectedResult);
     }
 
     public async getNumberOfGuests() {
@@ -81,7 +81,7 @@ export default class AirbnbMainPage extends BasePage {
     public async selectHighestRatedListing() {
         let highestRating = 0;
         let highestRatedElement: Locator;
-        await this.page.locator(this.listingRating).nth(3).locator('visible=true').waitFor()
+        await this.page.locator(this.listingRating).nth(3).locator('visible=true').waitFor();
         const ratingElements = await this.page.locator(this.listingRating).all();
         for (const element of ratingElements) {
             const ratingText = await element.innerText();
