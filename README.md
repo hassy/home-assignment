@@ -53,3 +53,10 @@ In addition, it includes a dedicated section for performance testing using [Arti
    ```bash
    artillery run airbnb-playwright-perf-test.yml
    ```
+### Continuous Integration
+
+This project utilizes GitHub Actions for Continuous Integration (CI). The workflows ensure that the codebase is regularly tested and verified. You can find the CI workflows in the [`.github/workflows`](./.github/workflows) directory.
+
+[![CI Status](https://github.com/Mshumaman/home-assignment/workflows/CI/badge.svg)](https://github.com/Mshumaman/home-assignment/actions)
+
+Click on the badge above to see the status of the CI workflows and to access detailed information about the workflow runs.
