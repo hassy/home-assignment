@@ -42,7 +42,7 @@ jobs:
           retention-days: 30
 
   artillery_load_test_job:
-    name: Artillery Socket.IO Load Test
+    name: Airbnb API Performance Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

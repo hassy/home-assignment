@@ -6,12 +6,13 @@ export default class ListingPage extends AirbnbMainPage {
     private checkinOut = '[data-testid="change-dates-checkOut"]';
     private guests = '[data-testid="book-it-default"] ._j1kt73';
     private guestsPanel = '._r2ourjn';
-    private closeGuestPanel = '[class*="p atm_9j"]'
+    private closeGuestPanel = '[class="_r2ourjn"] [class*="p atm_9j"]'
     private closeTranslationPopup = '[class*="k_1tcgj5g dir dir-ltr"]';
     private guestDropdown = '[for="GuestPicker-book_it-trigger"]';
     private childCounter = "GuestPicker-book_it-form-children-stepper-value";
     private childDecreaseButton = '[data-testid="GuestPicker-book_it-form-children-stepper-decrease-button"]';
     private reserveButton = '[data-plugin-in-point-id="BOOK_IT_SIDEBAR"] [data-testid="homes-pdp-cta-btn"]';
+    private clearDates = '[data-testid="inline-availability-calendar"] [class="_1sl8tba"]';
 
 
     public async closePopup() {
@@ -48,6 +49,8 @@ export default class ListingPage extends AirbnbMainPage {
 
 
     public async changeBookingDates(checkinOffset: number, checkoutOffset: number) {
+        let selectedCheckinDate = await this.page.locator('[aria-label*="Selected"] div').first().getAttribute('data-testid');
+        let selectedCheckoutDate = await this.page.locator('[aria-label*="Selected"] div').last().getAttribute('data-testid');
         let nextWeekDate = this.getDate(checkinOffset);
         let nextWeekDatePlusOne = this.getDate(checkoutOffset);
 
@@ -63,14 +66,23 @@ export default class ListingPage extends AirbnbMainPage {
         } else {
             // select check-in date
             await this.selectDate(nextWeekDate);
-            // select check-out date
-            await this.selectDate(nextWeekDatePlusOne);
-            // Format dates for validation
-            const formattedCheckInDate = this.formatDateWithoutLeadingZero(nextWeekDate);
-            const formattedCheckOutDate = this.formatDateWithoutLeadingZero(nextWeekDatePlusOne);
-            // Validate new dates selected and displayed
-            await this.validateCheckinDate(formattedCheckInDate);
-            await this.validateCheckoutDate(formattedCheckOutDate);
+            // check if week plus 1 is blocked. If it does, retain old dates
+            let isCheckoutBlocked = await this.page.getByTestId(nextWeekDatePlusOneSwap).getAttribute(isDateAvailableAttribute);
+            if(isCheckoutBlocked === "true"){
+                await this.page.locator(this.clearDates).click();
+                await this.page.getByTestId(selectedCheckinDate).click();
+                await this.page.getByTestId(selectedCheckoutDate).click();
+            } else {
+                // select check-out date
+                await this.selectDate(nextWeekDatePlusOne);
+                // Format dates for validation
+                const formattedCheckInDate = this.formatDateWithoutLeadingZero(nextWeekDate);
+                const formattedCheckOutDate = this.formatDateWithoutLeadingZero(nextWeekDatePlusOne);
+                // Validate new dates selected and displayed
+                await this.validateCheckinDate(formattedCheckInDate);
+                await this.validateCheckoutDate(formattedCheckOutDate);
+            }
+
         }
     }
 
