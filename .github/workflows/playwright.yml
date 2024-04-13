@@ -48,6 +48,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
       - name: Execute load tests
         uses: artilleryio/action-cli@v1
         with:
@@ -57,4 +61,4 @@ jobs:
         if: always()
         with:
           name: artillery-report
-          path: ./report.json # reference the generated report in the file system
+          path: Artillery/test-run-report.json # reference the generated report in the file system
