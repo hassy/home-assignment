@@ -11,14 +11,14 @@ export default defineConfig({
         ['junit', {outputFile: 'results.xml'}]],
 
     projects: [
-        // {
-        //     name: 'firefox',
-        //     use: {...devices['Desktop Firefox']},
-        // },
-        // {
-        //     name: 'Microsoft Edge',
-        //     use: {...devices['Desktop Edge'], channel: 'msedge'},
-        // },
+        {
+            name: 'firefox',
+            use: {...devices['Desktop Firefox']},
+        },
+        {
+            name: 'Microsoft Edge',
+            use: {...devices['Desktop Edge'], channel: 'msedge'},
+        },
         {
             name: 'Google Chrome',
             use: {...devices['Desktop Chrome'], channel: 'chrome'},

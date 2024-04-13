@@ -16,7 +16,7 @@ export default class AirbnbMainPage extends BasePage {
     private guestPanel = 'structured-search-input-field-guests-panel';
     private search = "structured-search-input-search-button";
     private results = '.tyi4kqb';
-    private listingRating = '[class="ru0q88m atm_cp_1ts48j8 dir dir-ltr"]';
+    private listingRating = '.ru0q88m:not(.fp93bgd .ru0q88m)';
     private guestsInSearchPanel = '[class$="ltr"][data-index="2"] .f16sug5q';
 
 
@@ -81,6 +81,7 @@ export default class AirbnbMainPage extends BasePage {
     public async selectHighestRatedListing() {
         let highestRating = 0;
         let highestRatedElement: Locator;
+        await this.page.locator(this.listingRating).nth(3).locator('visible=true').waitFor()
         const ratingElements = await this.page.locator(this.listingRating).all();
         for (const element of ratingElements) {
             const ratingText = await element.innerText();
@@ -90,11 +91,11 @@ export default class AirbnbMainPage extends BasePage {
                 highestRating = rating;
             }
         }
-        // If a highest rated element is found, click on it to open the listing in a new tab
+        // If the highest rated element is found, click on it to open the listing in a new tab
         if (highestRatedElement) {
             const [newTab] = await Promise.all([
                 this.page.waitForEvent('popup'),
-                await highestRatedElement.first().click({force: true})
+                await highestRatedElement.first().locator('visible=true').click({force: true})
             ]);
             return newTab;
         } else {
