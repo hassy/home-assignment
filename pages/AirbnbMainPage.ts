@@ -93,11 +93,11 @@ export default class AirbnbMainPage extends BasePage {
         }
         // If the highest rated element is found, click on it to open the listing in a new tab
         if (highestRatedElement) {
-            const [newTab] = await Promise.all([
-                this.page.waitForEvent('popup'),
-                await highestRatedElement.first().locator('visible=true').click({force: true})
-            ]);
-            return newTab;
+            const newTab = this.page.waitForEvent('popup');
+            await highestRatedElement.first().locator('visible=true').click({force: true})
+            const popup = await newTab;
+            await popup.waitForLoadState();
+            return popup;
         } else {
             throw new Error('No elements found with the specified class');
         }

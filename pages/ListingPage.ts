@@ -13,6 +13,7 @@ export default class ListingPage extends AirbnbMainPage {
     private childDecreaseButton = '[data-testid="GuestPicker-book_it-form-children-stepper-decrease-button"]';
     private reserveButton = '[data-plugin-in-point-id="BOOK_IT_SIDEBAR"] [data-testid="homes-pdp-cta-btn"]';
     private clearDates = '[data-testid="inline-availability-calendar"] [class="_1sl8tba"]';
+    private selectedDate = '[aria-label*="Selected"] div';
 
 
     public async closePopup() {
@@ -49,8 +50,9 @@ export default class ListingPage extends AirbnbMainPage {
 
 
     public async changeBookingDates(checkinOffset: number, checkoutOffset: number) {
-        let selectedCheckinDate = await this.page.locator('[aria-label*="Selected"] div').first().getAttribute('data-testid');
-        let selectedCheckoutDate = await this.page.locator('[aria-label*="Selected"] div').last().getAttribute('data-testid');
+        let selectedCheckinDate = await this.page.locator(this.selectedDate).first().getAttribute('data-testid');
+        let selectedCheckoutDate = await this.page.locator(this.selectedDate).last().getAttribute('data-testid');
+
         let nextWeekDate = this.getDate(checkinOffset);
         let nextWeekDatePlusOne = this.getDate(checkoutOffset);
 

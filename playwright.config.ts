@@ -12,20 +12,21 @@ export default defineConfig({
 
     projects: [
         {
-            name: 'firefox',
-            use: {...devices['Desktop Firefox']},
+            name: 'Google Chrome',
+            use: {...devices['Desktop Chrome'], channel: 'chrome'},
         },
         {
             name: 'Microsoft Edge',
             use: {...devices['Desktop Edge'], channel: 'msedge'},
         },
         {
-            name: 'Google Chrome',
-            use: {...devices['Desktop Chrome'], channel: 'chrome'},
+            name: 'firefox',
+            use: {...devices['Desktop Firefox']},
         },
     ],
     use: {
         baseURL: AIRBNB_BASE_URL,
+        viewport: {width: 1920, height: 1080},
         trace: 'on-first-retry',
         screenshot: 'on',
         video: {

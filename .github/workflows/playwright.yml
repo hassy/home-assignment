@@ -61,4 +61,26 @@ jobs:
         if: always()
         with:
           name: artillery-report
-          path: Artillery/test-run-report.json # reference the generated report in the file system
+          path: Artillery/test-run-report.json
+
+  artillery_load_test_job2:
+      name: Airbnb PW Performance Test
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 'lts/*'
+        - name: Execute load tests
+          uses: artilleryio/action-cli@v1
+          with:
+            command: run  --output Artillery/Playwright-perf-tests/test-run-report.json Artillery/Playwright-perf-tests/airbnb-playwright-perf-test.yml
+        - name: Upload artifact
+          uses: actions/upload-artifact@v4
+          if: always()
+          with:
+            name: artillery-report
+            path: Artillery/test-run-report.json # reference the generated report in the file system
