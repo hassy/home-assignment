@@ -39,7 +39,7 @@ export default class ListingPage extends AirbnbMainPage {
 
     public async decreaseChildGuestToZero() {
         await this.page.locator(this.guestDropdown).click();
-        let guestCount = parseInt(await this.page.getByTestId(this.childCounter).textContent());
+        let guestCount = await this.parseTextElementToNumber(this.page.getByTestId(this.childCounter));
         for (let i = 0; i < guestCount; i++) {
             await this.page.locator(this.childDecreaseButton).click();
             if (guestCount === 0) {

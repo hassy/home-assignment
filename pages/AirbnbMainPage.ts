@@ -39,7 +39,7 @@ export default class AirbnbMainPage extends BasePage {
         if (guestPanelCount) {
             await this.page.locator(this.addGuestsField).click();
         }
-        let guestCount = parseInt(await this.page.locator(`[data-testid="stepper-${guestType}-value"]`).textContent());
+        let guestCount = await this.parseTextElementToNumber(this.page.locator(`[data-testid="stepper-${guestType}-value"]`));
         for (let i = 0; i < guestNumber; i++) {
             await this.page.locator(`[data-testid="stepper-${guestType}-increase-button"]`).click();
             if (guestCount === guestNumber) {
@@ -56,7 +56,7 @@ export default class AirbnbMainPage extends BasePage {
     public async validateSearchResultsCount() {
         // Validate that the number of results is greater than 0
         await expect.poll(async () => {
-            return parseInt(await this.page.locator(this.results).textContent())
+            return await this.parseTextElementToNumber(this.page.locator(this.results))
         }, {
             timeout: 15000
         }).toBeGreaterThan(0);

@@ -1,4 +1,4 @@
-import {expect, Page} from "@playwright/test";
+import {expect, Locator, Page} from "@playwright/test";
 
 export default class BasePage {
 
@@ -30,7 +30,7 @@ export default class BasePage {
 
     public async validateTextContent(element: string, expectedText: string) {
         const locator = this.page.locator(element);
-        await expect.soft(locator).toContainText(expectedText);
+        await expect(locator).toContainText(expectedText);
     }
 
 
@@ -61,5 +61,9 @@ export default class BasePage {
             day: '2-digit',
             year: 'numeric'
         });
+    }
+
+    public async parseTextElementToNumber(element : Locator) {
+        return parseInt(await element.textContent());
     }
 }
