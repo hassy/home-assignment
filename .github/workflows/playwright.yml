@@ -53,8 +53,8 @@ jobs:
         with:
           node-version: 'lts/*'
 
-      # - name: Install Playwright Browsers
-      #   run: npx playwright install --with-deps
+      - name: Install Playwright Browsers
+        run: npx playwright install-deps chromium
 
       - name: Install Artillery
         run: npm install -g artillery
