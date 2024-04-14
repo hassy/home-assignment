@@ -52,6 +52,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
+
+      # - name: Install Playwright Browsers
+      #   run: npx playwright install --with-deps
+
+      - name: Install Artillery
+        run: npm install -g artillery
+
       - name: Execute load tests
         uses: artilleryio/action-cli@v1
         with:
